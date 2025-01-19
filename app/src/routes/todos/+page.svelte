@@ -25,7 +25,7 @@
           <Label for="description">description</Label>
           <Input id="name" autocomplete="off" name="description" placeholder="new todo"/>
         </div>
-        <Button type="submit">Add</Button>
+        <Button type="submit" class="font-bold">Add</Button>
       </div>
     </form>
   </Card.Content>
@@ -34,7 +34,7 @@
    <Table.Root style="margin-top:40px">
     <Table.Caption>
         {#if data.results[0] !== undefined}
-            Looks like you some have something to finsh
+            Looks like you some have something to finish
         {:else}
             All done good job<p style:opacity=0.3>but you can always do more 🫡</p>
         {/if}
@@ -42,7 +42,7 @@
     <Table.Header>
      <Table.Row>
       <Table.Head >Todo</Table.Head>
-      <Table.Head class="w-[50px]">Status</Table.Head>
+      <Table.Head class="w-[50px] text-center">Status</Table.Head>
      </Table.Row>
     </Table.Header>
     <Table.Body>
@@ -68,7 +68,7 @@
    </Table.Root> 
 
    <form method="POST" action="?/logout" use:enhance>
-    <Button class="logoutt" type="submit">logout</Button>
+    <Button class="logoutt font-bold" type="submit">logout</Button>
     </form>
 </div>
 
