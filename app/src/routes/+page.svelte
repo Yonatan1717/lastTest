@@ -1,0 +1,151 @@
+<!-- <script lang="ts">
+  import { enhance } from '$app/forms';
+  let {form} = $props(); 
+</script>
+
+
+<form method="POST" action="?/createAcounte" use:enhance>
+    <label>
+        create acount
+        <input name="name" placeholder="name">
+        <input name="email" placeholder="email">
+        <input name="password" placeholder="password">
+        <input name="passwordConfirm" placeholder="confirm password">
+        <input type="submit" value="submit">
+    </label>
+</form>
+
+
+
+<form method="POST" action="?/login" use:enhance>
+    <label>
+        login
+        <input name="email" placeholder="email">
+        <input name="password" placeholder="password">
+        <input type="submit" value="submit">
+    </label>
+</form>
+
+{#if form?.error}
+<p style:color="red">{form.error}</p>
+{/if} -->
+<!-- 
+<script lang="ts">
+    import { Button } from "$lib/components/ui/button/index.js";
+    import * as Card from "$lib/components/ui/card/index.js";
+    import { Input } from "$lib/components/ui/input/index.js";
+    import { Label } from "$lib/components/ui/label/index.js";
+    import { enhance } from '$app/forms';
+    let {form} = $props(); 
+  </script>
+
+<form method="POST" action="?/login" use:enhance>
+  <Card.Root class="w-full max-w-sm">
+    <Card.Header>
+      <Card.Title class="text-2xl">Login</Card.Title>
+      <Card.Description>Enter your email below to login to your account.</Card.Description>
+    </Card.Header>
+    <Card.Content class="grid gap-4">
+    
+      <div class="grid gap-2">
+        <Label for="email">Email</Label>
+        <Input name="email" id="email" type="email" placeholder="m@example.com" required />
+      </div>
+      <div class="grid gap-2">
+        <Label for="password">Password</Label>
+        <Input name="password" id="password" type="password" required />
+      </div>
+    
+    </Card.Content>
+    <Card.Footer>
+       <Button class="w-full" type="submit">Sign in</Button>
+       {#if form?.error}
+        <p style:color="red">{form.error}</p>
+        {/if}
+    </Card.Footer>
+  </Card.Root>
+</form> -->
+
+<script lang="ts">
+    import { Button ,buttonVariants} from "$lib/components/ui/button/index.js";
+    import { Input } from "$lib/components/ui/input/index.js";
+    import { Label } from "$lib/components/ui/label/index.js";
+    import * as Dialog from "$lib/components/ui/dialog/index.js";
+    import { enhance } from '$app/forms';
+    let {form} = $props();
+  </script>
+  
+<div class="sentreralt">
+  <div class="w-full lg:grid lg:min-h-[600px] lg:grid-cols-1 xl:min-h-[800px]">
+    <div class="flex items-center justify-center py-12">
+      <div class="mx-auto grid w-[350px] gap-6">
+        <div class="grid gap-2 text-center">
+          <h1 class="text-3xl font-bold">Sign in</h1>
+          <p class="text-muted-foreground text-balance">
+            Enter the required informasjon below to sign in
+          </p>
+        </div>
+        <form method="POST" action="?/createAcounte" use:enhance>
+        <div class="grid gap-4">
+          <div class="grid gap-2">
+            <Label for="name">username</Label>
+            <Input name="name" id="name" type="name" placeholder="username" required />
+          </div>
+          <div class="grid gap-2">
+            <Label for="email">Email</Label>
+            <Input name="email" id="email" type="email" placeholder="m@example.com" required />
+          </div>
+          <div class="grid gap-2">
+            <!-- <div class="flex items-center"> -->
+              <Label for="password">Password</Label>
+            <!-- </div> -->
+            <Input name="password" id="password" type="password" placeholder="8 charcter+ password" required />
+          </div>
+          <div class="grid gap-2">
+            <!-- <div class="flex items-center"> -->
+              <Label for="passwordConfirm">Confirm password</Label>
+            <!-- </div> -->
+            <Input name="passwordConfirm" id="passwordConfirm" type="password" placeholder="confirm password" required />
+          </div>
+          {#if form?.error}
+              <p style:color="red">{form.error}</p>
+          {/if}
+          <Button type="submit" class="w-full">sign in</Button>
+        </div>
+        </form> 
+        <div class="mt-4 text-center text-sm">
+          have an account?
+          <Dialog.Root>
+            <Dialog.Trigger class={buttonVariants({ variant: "outline" })}
+             >login</Dialog.Trigger>
+            <Dialog.Content class="sm:max-w-[425px]">
+             <Dialog.Header>
+              <Dialog.Title class="text-center text-3xl font-bold">log in</Dialog.Title>
+             </Dialog.Header>
+             <form method="POST" action="?/login" use:enhance>
+             <div class="grid gap-4 py-4">
+              <div class="grid gap-2">
+                <Label for="email"placeholder="m@example.com">email</Label>
+               <Input type="email" name="email" id="email" class="col-span-3" />
+              </div>
+              <div class="grid gap-2">
+                <Label for="password" >password</Label>
+               <Input type="password" name="password" id="password" class="col-span-3" />
+              </div>
+              {#if form?.error}
+              <p style:color="red">{form.error}</p>
+              {/if}
+             </div>
+             <Dialog.Footer>
+              <Button class="w-full" type="submit">login</Button>
+             </Dialog.Footer>
+            </form> 
+            </Dialog.Content>
+           </Dialog.Root>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+ 
