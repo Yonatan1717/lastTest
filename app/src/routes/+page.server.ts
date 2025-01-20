@@ -10,7 +10,7 @@ export function load({cookies} : {cookies: any}){
 }
 
 export const actions = {
-    createAcounte: async ({ request }: { request: Request }): Promise<void | object> => {
+    createAcounte: async ({ request, cookies }: { request: Request; cookies: any }): Promise<void | object> => {
         if (pb.authStore.isValid) {
             pb.authStore.clear();
         }
@@ -49,6 +49,18 @@ export const actions = {
             })
         }
         
+        try {
+            await pb.collection('users').authWithPassword(data.get('email') as string, data.get('password') as string);
+            cookies.set('user', pb.authStore.record?.id as string, { path:'/' });
+            cookies.set('username', pb.authStore.record?.name as string, { path:'/' });
+            console.log('done');
+        } catch (error) {
+            return fail(400, {
+                error: (error as Error).message
+            });
+        }
+
+        redirect(308, '/todos');
         
     },
     login: async ({ request, cookies }: { request: Request; cookies: any }): Promise<void | object> => {

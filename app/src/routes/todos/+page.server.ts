@@ -1,4 +1,4 @@
-import { redirect } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import PocketBase from 'pocketbase';
 
 const pb: PocketBase = new PocketBase("http://127.0.0.1:8090");
@@ -23,9 +23,16 @@ export async function load({ cookies }: { cookies: any }): Promise<{ results?: a
 
 
 export const actions = {
-    create: async ({cookies, request} : {cookies: any, request: Request}): Promise<void> => {
+    create: async ({cookies, request} : {cookies: any, request: Request}): Promise<void | object> => {
         if(!cookies.get('user')) return;
         const data: FormData =  await request.formData();
+        try {
+            if(String(data.get("description")).replaceAll(" ", "") == "") throw Error("Nothing to add.")
+        } catch (error) {
+            return fail(400, {
+                error: (error as Error).message
+            })
+        }
         const crateData : {
             description: FormDataEntryValue | null,
             user: string

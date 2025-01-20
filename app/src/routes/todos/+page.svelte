@@ -1,7 +1,7 @@
 <script lang="ts">
     import * as Table from "$lib/components/ui/table/index.js";
     import { enhance } from '$app/forms';
-    let {data} : {data:any} = $props();
+    let {data, form} : {data:any, form: any} = $props();
 
     let deleted: string[] = $state([])
     import { Button } from "$lib/components/ui/button/index.js";
@@ -16,15 +16,17 @@
 <Card.Root class="w-[350px]">
   <Card.Header>
     <Card.Title class="text-center">New todo</Card.Title>
-    <Card.Description class="text-center">Add a new todo</Card.Description>
+    <!-- <Card.Description class="text-center"></Card.Description> -->
   </Card.Header>
   <Card.Content>
     <form method="POST" action="?/create" use:enhance>
       <div class="grid w-full items-center gap-4">
         <div class="flex flex-col space-y-1.5">
-          <Label for="description">description</Label>
-          <Input id="name" autocomplete="off" name="description" placeholder="new todo"/>
+          <Input id="name" autocomplete="off" name="description" placeholder="Description"/>
         </div>
+        {#if form?.error}
+              <p style="color:red; font-size:small">{form.error}</p>
+        {/if}
         <Button type="submit" class="font-bold">Add</Button>
       </div>
     </form>
@@ -34,7 +36,7 @@
    <Table.Root style="margin-top:40px">
     <Table.Caption>
         {#if data.results[0] !== undefined}
-            Looks like you some have something to finish
+          Looks like you have something to finish 🤔
         {:else}
             All done good job<p style:opacity=0.3>but you can always do more 🫡</p>
         {/if}
@@ -42,7 +44,7 @@
     <Table.Header>
      <Table.Row>
       <Table.Head >Todo</Table.Head>
-      <Table.Head class="w-[50px] text-center">Status</Table.Head>
+      <Table.Head class="w-[50px] text-center">done?</Table.Head>
      </Table.Row>
     </Table.Header>
     <Table.Body>
@@ -59,7 +61,7 @@
         }}>
     
         <input type="hidden" name="id" value="{todo.id}">
-        <Button type="submit">Done</Button>
+        <button class="w-[20px] h-[20px] check" style="background:none" type="submit">🗑</button>
         </form>
         </Table.Cell>
       </Table.Row>
