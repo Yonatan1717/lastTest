@@ -45,7 +45,7 @@ export const actions = {
             await pb.collection('users').create(datac);
         } catch (error) {
             return fail(400, {
-                error: "This email may already have a created account"
+                error: (error as Error)
             })
         }
         
@@ -72,7 +72,7 @@ export const actions = {
             console.log('done');
         } catch (error) {
             return fail(400, {
-                error: (error as Error).message
+                error2: (error as Error).message
             });
         }
 

@@ -8,6 +8,9 @@
   import * as Card from "$lib/components/ui/card/index.js";
   import { Input } from "$lib/components/ui/input/index.js";
   import { Label } from "$lib/components/ui/label/index.js";
+  import { Textarea } from "$lib/components/ui/textarea/index.js";
+  import { fade, fly } from "svelte/transition";
+  let teller = $state(0);
  
 </script>
  
@@ -22,7 +25,7 @@
     <form method="POST" action="?/create" use:enhance>
       <div class="grid w-full items-center gap-4">
         <div class="flex flex-col space-y-1.5">
-          <Input id="name" autocomplete="off" name="description" placeholder="Description"/>
+          <Textarea id="name" autocomplete="off" name="description" placeholder="Description"/>
         </div>
         {#if form?.error}
               <p style="color:red; font-size:small">{form.error}</p>
@@ -33,7 +36,7 @@
   </Card.Content>
 </Card.Root>
     
-   <Table.Root style="margin-top:40px">
+   <Table.Root style="margin-top:40px; overflow:hidden;">
     <Table.Caption>
         {#if data.results[0] !== undefined}
           Looks like you have something to finish 🤔
@@ -44,13 +47,13 @@
     <Table.Header>
      <Table.Row>
       <Table.Head >Todo</Table.Head>
-      <Table.Head class="w-[50px] text-center">done?</Table.Head>
+      <Table.Head class="w-[50px] text-center"></Table.Head>
      </Table.Row>
     </Table.Header>
     <Table.Body>
     {#each data.results.filter((id:string) => !deleted.includes(id)) as todo (todo.id)}
       <Table.Row>
-       <Table.Cell class="font-medium">{todo.description}</Table.Cell>
+       <Table.Cell style="max-width: 350px;" class="font-medium"><p  out:fly={{duration:1000, x:350}} in:fly={{duration:1000, x:-650}}>{todo.description}</p></Table.Cell>
        <Table.Cell>
         <form method="POST" action="?/delete" use:enhance={()=>{
             deleted = [...deleted, todo.id];

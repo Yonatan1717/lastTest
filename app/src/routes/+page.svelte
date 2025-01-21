@@ -6,7 +6,8 @@
     import { enhance } from '$app/forms';
     let {form} = $props();
   </script>
-  
+
+
 <div class="sentreralt">
   <div class="w-full lg:grid lg:min-h-[600px] lg:grid-cols-1 xl:min-h-[800px]">
     <div class="flex items-center justify-center py-12">
@@ -64,8 +65,8 @@
                 <Label for="password" >password</Label>
                <Input type="password" name="password" id="password" class="col-span-3" />
               </div>
-              {#if form?.error}
-              <p style:color="red">{form.error}</p>
+              {#if form?.error2}
+              <p style:color="red">{form.error2}</p>
               {/if}
              </div>
              <Dialog.Footer>

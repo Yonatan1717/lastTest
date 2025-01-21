@@ -81,7 +81,7 @@
 {
     margin: 0;
     position:   relative;
-    margin-top:50px;
+    margin-top:200px;
     left: 50%;
     -ms-transform: translateX(-50%);
     transform: translateX(-50%);
@@ -100,7 +100,8 @@
   margin: 0;
   font-size:15px;
   position:   relative;
-  left: 50%;
+  left: 120%;
   -ms-transform: translateX(-50%);
   transform: translateX(-50%);
 }
+
