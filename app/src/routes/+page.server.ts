@@ -56,7 +56,7 @@ export const actions = {
             await pb.collection('users').create(datac);
         } catch (error) {
             return fail(400, {
-                error: (error as Error).message
+                error: "Something went wrong: It looks like there is already a user with this email."
             })
         }
         
