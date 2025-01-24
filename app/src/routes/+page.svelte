@@ -13,9 +13,9 @@
     <div class="flex items-center justify-center py-12">
       <div class="mx-auto grid w-[350px] gap-6">
         <div class="grid gap-2 text-center">
-          <h1 class="text-3xl font-bold">Sign in</h1>
+          <h1 class="text-3xl font-bold">Sign Up</h1>
           <p class="text-muted-foreground text-balance">
-            Enter the required informasjon below to sign in
+            Enter the required informasjon below to sign up
           </p>
         </div>
         <form method="POST" action="?/createAcounte" use:enhance>
@@ -43,13 +43,13 @@
           {#if form?.error}
               <p style:color="red">{form.error}</p>
           {/if}
-          <Button type="submit" class="w-full">sign in</Button>
+          <Button type="submit" class="w-full">sign Up</Button>
         </div>
         </form> 
         <div class="mt-4 text-center text-sm">
           have an account?
           <Dialog.Root>
-            <Dialog.Trigger class={buttonVariants({ variant: "outline" })}
+            <Dialog.Trigger class="link-button"
              >login</Dialog.Trigger>
             <Dialog.Content class="sm:max-w-[425px]">
              <Dialog.Header>

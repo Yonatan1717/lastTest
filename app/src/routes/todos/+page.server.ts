@@ -1,7 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
-import PocketBase from 'pocketbase';
+import pb from '$lib/db';
 
-const pb: PocketBase = new PocketBase("http://127.0.0.1:8090");
+  
 
 export async function load({ cookies }: { cookies: any }): Promise<{ results?: any[], name: string }> {
     

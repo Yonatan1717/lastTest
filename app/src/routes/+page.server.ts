@@ -1,19 +1,30 @@
-import { error, fail, redirect } from '@sveltejs/kit';
-import PocketBase from 'pocketbase';
+import {fail, redirect } from '@sveltejs/kit';
+import pb from '$lib/db';
 
-const pb: PocketBase = new PocketBase("http://127.0.0.1:8090");
 
-export function load({cookies} : {cookies: any}){
+
+
+export async function load({cookies} : {cookies: any}){
+    console.log('VITE_POCKETBASE_URL:', import.meta.env.VITE_POCKETBASE_URL);
+    const apiUrl = import.meta.env.VITE_POCKETBASE_URL;
+    const endpoint = `${apiUrl}/api/collections/users/records`;
+    console.log('Full URL:', endpoint);
+
     if(cookies.get('user')){
         redirect(308, '/todos')
     }
 }
 
+
+
+
 export const actions = {
-    createAcounte: async ({ request, cookies }: { request: Request; cookies: any }): Promise<void | object> => {
+    createAcounte: async ({ request, cookies }: { request: Request; cookies: any }) => {
+
         if (pb.authStore.isValid) {
             pb.authStore.clear();
         }
+
         const data: FormData = await request.formData();
         console.log(data);
    
@@ -45,7 +56,7 @@ export const actions = {
             await pb.collection('users').create(datac);
         } catch (error) {
             return fail(400, {
-                error: (error as Error)
+                error: (error as Error).message
             })
         }
         
@@ -63,13 +74,14 @@ export const actions = {
         redirect(308, '/todos');
         
     },
-    login: async ({ request, cookies }: { request: Request; cookies: any }): Promise<void | object> => {
+    login: async ({ request, cookies }: { request: Request; cookies: any }) => {
         const data: FormData = await request.formData();
+        await pb.collection('users').authWithPassword(data.get('email') as string, data.get('password') as string);
+        cookies.set('user', pb.authStore.record?.id as string, { path:'/' });
+        cookies.set('username', pb.authStore.record?.name as string, { path:'/' });
+        console.log('done');
         try {
-            await pb.collection('users').authWithPassword(data.get('email') as string, data.get('password') as string);
-            cookies.set('user', pb.authStore.record?.id as string, { path:'/' });
-            cookies.set('username', pb.authStore.record?.name as string, { path:'/' });
-            console.log('done');
+            
         } catch (error) {
             return fail(400, {
                 error2: (error as Error).message

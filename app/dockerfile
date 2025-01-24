@@ -1,21 +1,21 @@
-FROM node:18-alpine AS build
+# Dockerfile for SvelteKit App
+FROM node:18
 
+# Set the working directory
 WORKDIR /app
-COPY . .
+
+# Copy package files and install dependencies
+COPY package.json package-lock.json ./
 RUN npm install
-RUN npm install pocketbase
+
+# Copy the app source code
+COPY . .
+
+# Build the app
 RUN npm run build
 
-
-FROM node:18-alpine AS prod
-
-WORKDIR /app
-
-COPY --from=build /app/build ./build
-COPY --from=build /app/package.json .
-
-RUN npm install --omit=dev
-
+# Expose the port SvelteKit runs on
 EXPOSE 3000
 
-CMD ["node", "build/index.js"]
+# Start the app in preview mode
+CMD ["npm", "run", "preview"]

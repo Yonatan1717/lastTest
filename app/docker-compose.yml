@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  sveltekit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:4173"
+    depends_on:
+      - pocketbase
+    environment:
+      # Pass the PocketBase URL to the SvelteKit app
+      VITE_POCKETBASE_URL: "http://pocketbase:8090"
+
+  pocketbase:
+    image: elestio/pocketbase:latest
+    container_name: pocketbase
+    ports:
+      - "8090:8090"
+    volumes:
+      - pocketbase_data:/pb_data
+    restart: unless-stopped
+
+volumes:
+  pocketbase_data:
+
