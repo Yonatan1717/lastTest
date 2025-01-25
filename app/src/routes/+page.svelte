@@ -59,11 +59,11 @@
              <div class="grid gap-4 py-4">
               <div class="grid gap-2">
                 <Label for="email"placeholder="m@example.com">email</Label>
-               <Input type="email" name="email" id="email" class="col-span-3" />
+               <Input type="email" name="email" id="email" class="col-span-3" required/>
               </div>
               <div class="grid gap-2">
                 <Label for="password" >password</Label>
-               <Input type="password" name="password" id="password" class="col-span-3" />
+               <Input type="password" name="password" id="password" class="col-span-3" required/>
               </div>
               {#if form?.error2}
               <p style:color="red">{form.error2}</p>
