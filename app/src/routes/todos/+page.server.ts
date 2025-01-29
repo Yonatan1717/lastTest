@@ -4,10 +4,11 @@ import pb from '$lib/db';
   
 
 export async function load({ cookies }: { cookies: any }): Promise<{ results?: any[], name: string }> {
+
     
     let user: string | null = cookies.get('user'); // henter ut bruker id
 
-    if (user) { // hvis cookien existerer hent tilhørende todo for brukern og retuner den 
+    if (user) { // hvis cookien existerer hent tilhørende todo for brukern og returner den 
         const results: any[] = await pb.collection("todos").getFullList(200, {
             filter: `user="${user}"`
         });
@@ -27,7 +28,7 @@ export const actions = {
         if(!cookies.get('user')) return;
         const data: FormData =  await request.formData();
         try {
-            if(String(data.get("description")).replaceAll(" ", "") == "") throw Error("Nothing to add.")
+            if(String(data.get("description")).replaceAll(" ", "") == "") throw Error("Nothing to add.");
         } catch (error) {
             return fail(400, {
                 error: (error as Error).message

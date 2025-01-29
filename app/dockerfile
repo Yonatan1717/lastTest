@@ -17,5 +17,5 @@ RUN npm run build
 # Expose the port SvelteKit runs on
 EXPOSE 3000
 
-# Start the app in preview mode
-CMD ["npm", "run", "preview"]
+# Start the app
+CMD ["node", "build/index.js"]
