@@ -10,7 +10,6 @@ services:
     depends_on:
       - pocketbase
     environment:
-      # Pass the PocketBase URL to the SvelteKit app
       VITE_POCKETBASE_URL: "http://pocketbase:8090"
 
   pocketbase:
@@ -21,7 +20,23 @@ services:
     volumes:
       - pocketbase_data:/pb_data
     restart: unless-stopped
+    user: root  # ✅ Runs PocketBase as root
+    entrypoint: [ "sh", "-c", "
+      chmod -R 777 /pb_data;
+      if [ ! -f /pb_data/admin_created ]; then
+        /usr/local/bin/pocketbase superuser create nilltill05@gmail.com nani171717 && touch /pb_data/admin_created ;
+      fi;
+      /usr/local/bin/pocketbase serve --http 0.0.0.0:8090;
+    " ]
+
+  setup:
+    build:
+      context: .
+      dockerfile: dockerfile.setup
+    container_name: pocketbase-setup
+    depends_on:
+      - pocketbase
+    restart: on-failure
 
 volumes:
   pocketbase_data:
-

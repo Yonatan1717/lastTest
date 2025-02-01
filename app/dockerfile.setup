@@ -1,0 +1,15 @@
+# Use a lightweight Node.js Alpine base image
+FROM node:18-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Copy package.json and install dependencies before running the script
+COPY package.json package-lock.json* ./
+RUN npm install --no-audit --no-fund
+
+# Copy the initialization script
+COPY init.mjs .
+
+# Set entrypoint to run the script
+CMD ["node", "/app/init.mjs"]
